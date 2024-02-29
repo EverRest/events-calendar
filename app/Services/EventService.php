@@ -3,68 +3,48 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Data\Transformers\EventTransformer;
+use App\Data\Transformers\RecurringPatternTransformer;
 use App\Models\Event;
 use App\Repositories\EventRepository;
-use Illuminate\Contracts\Pagination\Paginator;
-use Throwable;
+use Exception;
+use Illuminate\Support\Facades\DB;
 
-class EventService
+final class EventService extends ServiceWithRepository
 {
     /**
      * @param EventRepository $eventRepository
      */
-    public function __construct(private readonly EventRepository $eventRepository)
+    public function __construct(EventRepository $eventRepository)
     {
-    }
-
-    /**
-     * @param array $attributes
-     *
-     * @return Paginator
-     */
-    public function index(array $attributes): Paginator
-    {
-        return $this->eventRepository->getPaginatedList($attributes);
+        $this->repository = $eventRepository;
     }
 
     /**
      * @param array $attributes
      *
      * @return Event
+     * @throws Exception
      */
     public function create(array $attributes): Event
     {
-        /**@var Event $event */
-        $event = $this->eventRepository->store($attributes);
+        DB::beginTransaction();
 
-        return $event;
-    }
+        try {
+            $eventDto =EventTransformer::from($attributes);
+            $event = parent::create($eventDto->toEventModel());
+            if($eventDto->isRecurring){
+                $recurringPatternDto =RecurringPatternTransformer::from($attributes);
+                $event->recurringPattern()->create(
+                    $recurringPatternDto->toRecurringPatternModel()
+                );
+            }
+            DB::commit();
 
-    /**
-     * @param Event $event
-     * @param array $attributes
-     *
-     * @return Event
-     */
-    public function update(Event $event, array $attributes): Event
-    {
-        /**@var Event $event */
-        $event =  $this->eventRepository->update($event, $attributes);
-
-        return $event;
-    }
-
-    /**
-     * @param Event $event
-     *
-     * @return Event
-     * @throws Throwable
-     */
-    public function delete(Event $event): Event
-    {
-        /**@var Event $event */
-        $event =  $this->eventRepository->destroy($event);
-
-        return $event;
+            return $event;
+        } catch (Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
     }
 }

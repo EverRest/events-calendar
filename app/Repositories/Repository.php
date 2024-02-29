@@ -13,7 +13,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
 use Throwable;
 
-class Repository
+class Repository implements IRepository
 {
     /**
      * @var string
