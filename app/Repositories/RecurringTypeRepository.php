@@ -20,7 +20,7 @@ final class RecurringTypeRepository extends Repository
     public function getRecurringTypeByCode(string $code): ?RecurringType
     {
         /** @var RecurringType|null $model */
-        $model = $this->query()::where('code', $code)->first();
+        $model = $this->query()->where('code', $code)->first();
 
         return $model;
     }
