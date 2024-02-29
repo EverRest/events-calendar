@@ -21,6 +21,12 @@ class Repository implements IRepository
     protected string $model;
 
     /**
+     * @var array
+     */
+    protected array $with = [
+    ];
+
+    /**
      * Get a list of models
      *
      * @param array $data
@@ -90,7 +96,7 @@ class Repository implements IRepository
     }
 
     /**
-     * Update and refresh model
+     * Put and refresh model
      *
      * @param Model $model
      * @param array $data
@@ -119,7 +125,7 @@ class Repository implements IRepository
     }
 
     /**
-     * Update or throw an exception if it fails.
+     * Put or throw an exception if it fails.
      *
      * @param Model $model
      * @param array $data
@@ -181,6 +187,7 @@ class Repository implements IRepository
     protected function listQuery(array $data): Builder
     {
         $query = $this->search($data);
+        $query = $this->with($query,);
         $this->filter(
             $query,
             Arr::except($data, ListRequestEnum::values())
@@ -297,8 +304,11 @@ class Repository implements IRepository
      *
      * @return Builder
      */
-    protected function with($query): Builder
+    protected function with($query,): Builder
     {
+        if (!empty($this->with)) {
+            $query->with($this->with);
+        }
         return $query;
     }
 

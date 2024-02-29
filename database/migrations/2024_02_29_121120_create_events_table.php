@@ -16,9 +16,10 @@ return new class extends Migration
             $table->string('title')->index();
             $table->text('description')->nullable();
             $table->date('start_date');
-            $table->date('end_date')->nullable();
-            $table->timestamp('start_time')->nullable();
-            $table->timestamp('end_time')->nullable();
+            $table->date('end_date');
+            $table->date('repeat_until')->nullable();
+            $table->integer('start_time')->nullable();
+            $table->integer('end_time')->nullable();
             $table->foreignId('parent_id')
                 ->nullable()
                 ->constrained('events')

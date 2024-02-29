@@ -20,8 +20,8 @@ class Update extends FormRequest
             'description' => ['sometimes', 'min:3', 'max:255', 'string'],
             'start' => ['sometimes', 'date'],
             'end' => ['sometimes', 'date', 'after:start'],
-            'repeat_until' => ['required_with:frequency', 'date', 'after:end'],
-            'frequency' => ['required_with:repeat_until', 'string', 'in:daily,weekly,monthly,yearly'],
+            'repeat_until' => ['sometimes', 'date', 'after:end'],
+            'frequency' => ['sometimes', 'string', 'in:daily,weekly,monthly,yearly'],
         ];
     }
 }

@@ -56,7 +56,7 @@ interface IRepository
     public function firstOrCreate(array $data): Model;
 
     /**
-     * Update and refresh model
+     * Put and refresh model
      *
      * @param Model $model
      * @param array $data
@@ -77,7 +77,7 @@ interface IRepository
     public function patch(Model $model, string $fieldName, mixed $data): Model;
 
     /**
-     * Update or throw an exception if it fails.
+     * Put or throw an exception if it fails.
      *
      * @param Model $model
      * @param array $data

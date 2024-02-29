@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Services;
+namespace App\Services\Db;
 
 use App\Models\RecurringType;
 use App\Repositories\RecurringTypeRepository;
@@ -19,9 +19,9 @@ final class RecurringTypeService extends ServiceWithRepository
     /**
      * @param string $code
      *
-     * @return RecurringType|null
+     * @return RecurringType
      */
-    public function getRecurringTypeByCode(string $code): ?RecurringType
+    public function getRecurringTypeByCode(string $code): RecurringType
     {
         return $this->repository->getRecurringTypeByCode($code);
     }

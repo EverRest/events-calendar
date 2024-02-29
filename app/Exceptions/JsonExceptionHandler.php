@@ -48,7 +48,7 @@ class JsonExceptionHandler extends ExceptionHandler
      *
      * @return JsonResponse
      */
-    protected function handleApiException($request, Exception $exception): JsonResponse
+    protected function handleApiException($request, Throwable $exception): JsonResponse
     {
         $statusCode = $this->getStatusCode($exception);
 
@@ -61,11 +61,11 @@ class JsonExceptionHandler extends ExceptionHandler
     }
 
     /**
-     * @param Exception $exception
+     * @param Throwable $exception
      *
      * @return int
      */
-    protected function getStatusCode(Exception $exception): int
+    protected function getStatusCode(Throwable $exception): int
     {
         if ($exception instanceof HttpException) {
             return $exception->getStatusCode();

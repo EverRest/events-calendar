@@ -8,7 +8,7 @@ use App\Models\RecurringType;
 final class RecurringTypeRepository extends Repository
 {
     /**
-     * @var string  $model
+     * @var string $model
      */
     protected string $model = RecurringType::class;
 
@@ -20,7 +20,9 @@ final class RecurringTypeRepository extends Repository
     public function getRecurringTypeByCode(string $code): ?RecurringType
     {
         /** @var RecurringType|null $model */
-        $model = $this->query()->where('code', $code)->first();
+        $model = $this->query()
+            ->where('recurring_type', $code)
+            ->first();
 
         return $model;
     }

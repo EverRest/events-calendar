@@ -8,7 +8,8 @@ use App\Http\Requests\Event\Store;
 use App\Http\Requests\Event\Update;
 use App\Http\Resources\Event\EventResource;
 use App\Models\Event;
-use App\Services\EventService;
+use App\Services\Db\EventService;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Throwable;
 
@@ -42,6 +43,7 @@ class EventController extends Controller
      * @param Store $request
      *
      * @return JsonResponse
+     * @throws Exception
      */
     public function store(Store $request): JsonResponse
     {
@@ -49,6 +51,23 @@ class EventController extends Controller
         $model = $this->eventService->create($attributes);
 
         return (new EventResource($model))->response();
+    }
+
+    /**
+     * Put the specified resource in storage.
+     *
+     * @param Update $request
+     * @param Event $event
+     *
+     * @return JsonResponse
+     * @throws Throwable
+     */
+    public function update(Update $request, Event $event): JsonResponse
+    {
+        $attributes = $request->validated();
+        $event = $this->eventService->update($event, $attributes);
+
+        return (new EventResource($event))->response();
     }
 
     /**
@@ -60,22 +79,6 @@ class EventController extends Controller
      */
     public function show(Event $event): JsonResponse
     {
-        return (new EventResource($event))->response();
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param Update $request
-     * @param Event $event
-     *
-     * @return JsonResponse
-     */
-    public function update(Update $request, Event $event): JsonResponse
-    {
-        $attributes = $request->validated();
-        $event = $this->eventService->update($event, $attributes);
-
         return (new EventResource($event))->response();
     }
 

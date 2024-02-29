@@ -20,9 +20,27 @@ class Event extends Model
         'description',
         'start_date',
         'end_date',
+        'repeat_until',
         'start_time',
         'end_time',
         'parent_id',
+    ];
+
+    /**
+     * @var string[] $hidden
+     */
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
+
+    /**
+     * @var string[] $casts
+     */
+    protected $casts = [
+        'start_date' => 'date',
+        'end_date' => 'date',
+        'repeat_until' => 'date',
     ];
 
     /**

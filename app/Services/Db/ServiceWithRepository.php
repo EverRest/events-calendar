@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Services;
+namespace App\Services\Db;
 
 use App\Models\Event;
 use App\Repositories\IRepository;
@@ -41,11 +41,12 @@ class ServiceWithRepository
      * @param array $attributes
      *
      * @return Event
+     * @throws Throwable
      */
     public function update(Event $event, array $attributes): Event
     {
         /**@var Event $event */
-        $event =  $this->repository->update($event, $attributes);
+        $event =  $this->repository->updateOrFail($event, $attributes);
 
         return $event;
     }

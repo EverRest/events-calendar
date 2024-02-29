@@ -5,6 +5,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class RecurringPattern extends Model
 {
@@ -22,4 +23,20 @@ class RecurringPattern extends Model
         'week_of_month',
         'month_of_year',
     ];
+
+    /**
+     * @var string[] $hidden
+     */
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
+
+    /**
+     * @return BelongsTo
+     */
+    public function recurringType(): BelongsTo
+    {
+        return $this->belongsTo(RecurringType::class);
+    }
 }

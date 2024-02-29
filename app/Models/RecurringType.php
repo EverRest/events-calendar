@@ -19,9 +19,17 @@ class RecurringType extends Model
     ];
 
     /**
+     * @var string[] $hidden
+     */
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
+
+    /**
      * @return HasMany
      */
-    public function reccurringPatterns(): HasMany
+    public function recurringPatterns(): HasMany
     {
         return $this->hasMany(RecurringPattern::class);
     }

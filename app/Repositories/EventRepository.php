@@ -8,7 +8,12 @@ use App\Models\Event;
 final class EventRepository extends Repository
 {
     /**
-     * @var string  $model
+     * @var string $model
      */
     protected string $model = Event::class;
+
+    /**
+     * @var array $with
+     */
+    protected array $with = ['recurringPattern.recurringType',];
 }
