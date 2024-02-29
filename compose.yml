@@ -27,32 +27,33 @@ services:
     container_name: db
     restart: unless-stopped
     tty: true
+    volumes:
+      - dbdata:/var/lib/mysql/
+      - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
     ports:
       - "3307:3306"
     environment:
       MYSQL_DATABASE: laravel
       MYSQL_ROOT_PASSWORD: laravel
-    volumes:
-      - dbdata:/var/lib/mysql/
-      - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
 
   test_db:
     image: mysql:8.0
     container_name: test_db
     restart: unless-stopped
     tty: true
+    volumes:
+      - test_dbdata:/var/lib/mysql/
+      - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
     ports:
       - "3308:3306"
     environment:
       MYSQL_DATABASE: laravel
       MYSQL_ROOT_PASSWORD: laravel
-    volumes:
-      - dbdata:/var/lib/mysql/
-      - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
 
   postgresql:
     image: postgres
     container_name: postgresql
+    restart: unless-stopped
     environment:
       POSTGRES_USER: sonar
       POSTGRES_PASSWORD: sonar
@@ -66,6 +67,7 @@ services:
   sonarqube:
     image: sonarqube:community
     container_name: sonarqube
+    restart: unless-stopped
     environment:
       - sonar.jdbc.url=jdbc:postgresql://postgresql:5433/sonar
       - sonar.jdbc.username=sonar
@@ -75,10 +77,10 @@ services:
       - sonarqube_data:/opt/sonarqube/data
       - sonarqube_extensions:/opt/sonarqube/extensions
       - sonarqube_bundled-plugins:/opt/sonarqube/lib/bundled-plugins
-    expose:
-      - 9000
     ports:
       - "127.0.0.1:8080:9000"
+    expose:
+      - 9000
     depends_on:
       - postgresql
 
@@ -90,3 +92,4 @@ volumes:
   postgresql:
   postgresql_data:
   dbdata:
+  test_dbdata:

@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
-use App\Models\User;
+use App\Models\Event;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 /**
- * @extends Factory<User>
+ * @extends Factory<Event>
  */
-class UserFactory extends Factory
+class EventFactory extends Factory
 {
     /**
      * The current password being used by the factory.
