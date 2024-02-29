@@ -3,13 +3,13 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
-use App\Models\Recurring;
+use App\Models\RecurringType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 /**
- * @extends Factory<Recurring>
+ * @extends Factory<RecurringType>
  */
 class RecurringFactory extends Factory
 {

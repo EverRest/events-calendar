@@ -7,5 +7,8 @@ use Exception;
 
 class OverlappingEventException extends Exception
 {
-    protected $message = 'The date is overlapping with another event';
+    /**
+     * @var string $message
+     */
+    protected $message = 'The date of the current event is overlapping with another event. Please choose another date.';
 }

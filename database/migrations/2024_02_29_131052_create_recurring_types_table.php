@@ -10,10 +10,9 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('recurring_patterns', function (Blueprint $table) {
+        Schema::create('recurring_types', function (Blueprint $table) {
             $table->id();
-            $table->string('code')->unique();
-            $table->string('title',100);
+            $table->string('recurring_type', 30)->index();
             $table->timestamps();
         });
     }
@@ -23,6 +22,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('recurring_patterns');
+        Schema::dropIfExists('recurring_types');
     }
 };

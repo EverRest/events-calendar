@@ -5,7 +5,7 @@ namespace App\Enums;
 
 use App\Traits\EnumHasToArray;
 
-enum RecurringPatternsEnum: string
+enum RecurringTypeEnum: string
 {
     use EnumHasToArray;
 
