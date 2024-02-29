@@ -1,6 +1,9 @@
 # Use the official PHP 8.2 FPM Alpine image as the base image
 FROM php:8.2-fpm-alpine
 
+# Set the working directory
+WORKDIR /var/www/html
+
 # Install system dependencies
 RUN apk --no-cache add \
     libzip-dev \
@@ -23,9 +26,6 @@ RUN apk --no-cache add \
 
 # Install additional PHP extensions
 RUN docker-php-ext-install pdo pdo_mysql zip exif gd
-
-# Set the working directory
-WORKDIR /var/www/html
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer

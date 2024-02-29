@@ -8,7 +8,7 @@ use App\Http\Requests\Event\Store;
 use App\Http\Requests\Event\Update;
 use App\Http\Resources\Event\EventResource;
 use App\Models\Event;
-use App\Repositories\EventRepository;
+use App\Services\EventService;
 use Illuminate\Http\JsonResponse;
 use Throwable;
 
@@ -17,7 +17,7 @@ class EventController extends Controller
     /**
      * EventController constructor.
      */
-    public function __construct(private readonly EventRepository $eventRepository)
+    public function __construct(private readonly EventService $eventService)
     {
     }
 
@@ -31,7 +31,7 @@ class EventController extends Controller
     public function index(Index $request): JsonResponse
     {
         $attributes = $request->validated();
-        $list = $this->eventRepository->getPaginatedList($attributes);
+        $list = $this->eventService->index($attributes);
 
         return EventResource::collection($list)->response();
     }
@@ -46,7 +46,7 @@ class EventController extends Controller
     public function store(Store $request): JsonResponse
     {
         $attributes = $request->validated();
-        $model = $this->eventRepository->store($attributes);
+        $model = $this->eventService->create($attributes);
 
         return (new EventResource($model))->response();
     }
@@ -74,7 +74,7 @@ class EventController extends Controller
     public function update(Update $request, Event $event): JsonResponse
     {
         $attributes = $request->validated();
-        $event = $this->eventRepository->update($event, $attributes);
+        $event = $this->eventService->update($event, $attributes);
 
         return (new EventResource($event))->response();
     }
@@ -84,11 +84,13 @@ class EventController extends Controller
      *
      * @param Event $event
      *
-     * @return void
+     * @return JsonResponse
      * @throws Throwable
      */
-    public function destroy(Event $event): void
+    public function destroy(Event $event): JsonResponse
     {
-        $this->eventRepository->destroy($event);
+        $event = $this->eventService->delete($event);
+
+        return (new EventResource($event))->response();
     }
 }
