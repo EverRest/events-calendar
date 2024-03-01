@@ -15,13 +15,19 @@
         "spatie/laravel-data": "^4.1"
     },
     "require-dev": {
+        "behat/behat": "^3.0.5",
+        "behat/mink": "^1.5",
+        "behat/mink-goutte-driver": "^1.1 || ^2.0",
+        "phpspec/phpspec": "^6.0 || ^7.0 || 7.1.x-dev",
         "fakerphp/faker": "^1.9.1",
+        "friendsofphp/php-cs-fixer": "^3.51",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.18",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^7.0",
         "phpstan/phpstan": "^1.10",
         "phpunit/phpunit": "^10.1",
+        "soulcodex/laravel-behat": "^1.0",
         "spatie/laravel-ignition": "^2.0",
         "squizlabs/php_codesniffer": "^3.9"
     },

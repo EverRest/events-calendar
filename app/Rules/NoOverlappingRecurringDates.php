@@ -47,6 +47,7 @@ class NoOverlappingRecurringDates implements Rule
                         });
                 });
         })->whereNotIn('id', [$this->eventId])->count();
+        if ($overlappingEvents > 0) return false;
         $overlappingPatterns = RecurringPattern::where(function ($query) use ($value) {
             $query->where('event_id', '<>', $this->eventId)
                 ->where(function ($query) use ($value) {
@@ -73,7 +74,7 @@ class NoOverlappingRecurringDates implements Rule
                 });
         })->count();
 
-        return $overlappingEvents === 0 && $overlappingPatterns === 0;
+        return $overlappingPatterns === 0;
     }
 
     /**
