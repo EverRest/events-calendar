@@ -12,6 +12,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
 use Throwable;
+use League\Pipeline\Pipeline;
 
 class Repository implements IRepository
 {
@@ -23,8 +24,7 @@ class Repository implements IRepository
     /**
      * @var array
      */
-    protected array $with = [
-    ];
+    protected array $with = [];
 
     /**
      * Get a list of models

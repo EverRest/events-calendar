@@ -19,7 +19,7 @@ class Store extends FormRequest
             'title' => ['required', 'min:3', 'max:255', 'string'],
             'description' => ['required', 'min:3', 'max:255', 'string'],
             'start' => ['required', 'date:Y-m-d H:i:s'],
-            'end' => ['required', 'date:Y -m-d H:i:s', 'after:start'],
+            'end' => ['required', 'date:Y-m-d H:i:s', 'after:start'],
             'repeat_until' => ['required_with:frequency', 'date', 'after:end'],
             'frequency' => ['required_with:repeat_until', 'string', 'in:daily,weekly,monthly,yearly'],
         ];

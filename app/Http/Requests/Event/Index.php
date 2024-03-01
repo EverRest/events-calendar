@@ -16,11 +16,13 @@ class Index extends FormRequest
     public function rules(): array
     {
         return [
-            'search' => ['sometimes','min:3', 'max:255','string',],
-            'page' => ['sometimes','integer', 'min:1'],
-            'limit' => ['sometimes','integer', 'min:1'],
-            'sort' => ['sometimes','string', 'in:id,title,description,start,end'],
-            'order' => ['sometimes','string', 'in:asc,desc'],
+            'search' => ['sometimes', 'min:3', 'max:255', 'string',],
+            'page' => ['sometimes', 'integer', 'min:1'],
+            'limit' => ['sometimes', 'integer', 'min:1'],
+            'sort' => ['sometimes', 'string', 'in:id,title,description,start,end'],
+            'order' => ['sometimes', 'string', 'in:asc,desc'],
+            'from' => ['sometimes', 'date:Y-m-d', 'required_with:to', 'before:to'],
+            'to' => ['sometimes', 'date:Y-m-d', 'required_with:from', 'after:from'],
         ];
     }
 }

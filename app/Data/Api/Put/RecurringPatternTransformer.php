@@ -4,8 +4,9 @@ declare(strict_types=1);
 namespace App\Data\Api\Put;
 
 use App\Data\Casts\CarbonDate;
-use App\Enums\RecurringTypeEnum;
 use App\Models\RecurringType;
+use App\Traits\TransformerHasGetMaxNumOfOccurrences;
+use App\Traits\TransformerHasGetSeparationCount;
 use Illuminate\Support\Carbon;
 use Spatie\LaravelData\Attributes\MapInputName;
 use Spatie\LaravelData\Attributes\WithCast;
@@ -13,6 +14,9 @@ use Spatie\LaravelData\Data;
 
 class RecurringPatternTransformer extends Data
 {
+    use TransformerHasGetMaxNumOfOccurrences;
+    use TransformerHasGetSeparationCount;
+
     /**
      * @param Carbon|null $start
      * @param Carbon|null $end
@@ -52,35 +56,5 @@ class RecurringPatternTransformer extends Data
         return array_filter($dtoAttributes, function ($attribute) {
             return $attribute !== null && $attribute !== '';
         });
-    }
-
-    /**
-     * @return int
-     */
-    private function getMaxNumOfOccurrences(): int
-    {
-        return match ($this->recurring_type_model->recurring_type) {
-            RecurringTypeEnum::DAILY->value => $this->repeat_until
-                ->diffInDays($this->start),
-            RecurringTypeEnum::WEEKLY->value => $this->repeat_until
-                ->diffInWeeks($this->start),
-            RecurringTypeEnum::MONTHLY->value => $this->repeat_until
-                ->diffInMonths($this->start),
-            RecurringTypeEnum::YEARLY->value => $this->repeat_until
-                ->diffInYears($this->start),
-        };
-    }
-
-    /**
-     * @return int
-     */
-    private function getSeparationCount(): int
-    {
-        return match ($this->recurring_type_model->recurring_type) {
-            RecurringTypeEnum::DAILY->value => 0,
-            RecurringTypeEnum::WEEKLY->value => 0,
-            RecurringTypeEnum::MONTHLY->value => 0,
-            RecurringTypeEnum::YEARLY->value => 0,
-        };
     }
 }
